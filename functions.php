@@ -424,20 +424,224 @@ function darQueryVars($vars) {
 add_filter('query_vars', 'darQueryVars');
 
 function cc_register_rest_fields(){
-	register_rest_field( 'posts',
+	register_rest_field( 'post',
         'titulo',
         array(
-//             'get_callback'    => 'rest_api_titulo',
+            'get_callback' => 'rest_api_titulo_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'fecha',
+        array(
+            'get_callback' => 'rest_api_fecha_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'pais',
+        array(
+            'get_callback' => 'rest_api_pais_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'departamento',
+        array(
+            'get_callback' => 'rest_api_departamento_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'municipio',
+        array(
+            'get_callback' => 'rest_api_municipio_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'centro_poblado',
+        array(
+            'get_callback' => 'rest_api_centropoblado_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'tags',
+        array(
+            'get_callback' => 'rest_api_tagslist_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'iniciativa',
+        array(
+            'get_callback' => 'rest_api_iniciativalist_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'tipo-de-victimizacion',
+        array(
+            'get_callback' => 'rest_api_tipoviclist_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'autor',
+        array(
+            'get_callback' => 'rest_api_autorlist_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'creditos',
+        array(
+            'get_callback' => 'rest_api_creditoslist_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'derecho',
+        array(
+            'get_callback' => 'rest_api_derechoslist_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'tipo-de-contenido',
+        array(
+            'get_callback' => 'rest_api_tipo_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'archivo',
+        array(
+            'get_callback' => 'rest_api_archivo_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+
+    register_rest_field( 'post',
+        'descripcion',
+        array(
+            'get_callback' => 'rest_api_descripcion_cc',
             'update_callback' => null,
             'schema'          => null,
         )
     );
 }
 
-function rest_api_titulo($object, $field_name, $request){
-	return get_field($object['id'], 'titulo');
+function rest_api_titulo_cc($object){
+    $titulo = get_field('titulo', $object['id']);
+	return $titulo;
+}
+
+function rest_api_fecha_cc($object){
+    $fecha = get_field('fecha', $object['id']);
+	return $fecha;
+}
+
+function rest_api_pais_cc($object){
+    return returnTaxoJSON($object['id'], 'pais');
+}
+
+function rest_api_departamento_cc($object){
+    return returnTaxoJSON($object['id'], 'departamento');
+}
+
+function rest_api_municipio_cc($object){
+    return returnTaxoJSON($object['id'], 'municipio');
+}
+
+function rest_api_centropoblado_cc($object){
+    return returnTaxoJSON($object['id'], 'ciudad');
+}
+
+function rest_api_tagslist_cc($object){
+    return returnTaxoJSON($object['id'], 'post_tag');
+}
+
+function rest_api_iniciativalist_cc($object){
+    return returnTaxoJSON($object['id'], 'iniciativa');
+}
+
+function rest_api_tipoviclist_cc($object){
+    return returnTaxoJSON($object['id'], 'tipo-de-victimizacion');
+}
+
+function rest_api_autorlist_cc($object){
+    return returnTaxoJSON($object['id'], 'autor');
+}
+
+function rest_api_creditoslist_cc($object){
+    return returnTaxoJSON($object['id'], 'creditos');
+}
+
+function rest_api_derechoslist_cc($object){
+    return returnTaxoJSON($object['id'], 'derecho');
+}
+
+function rest_api_tipo_cc($object){
+    return returnTaxoJSON($object['id'], 'tipo-de-contenido');
+}
+
+function rest_api_archivo_cc($object){
+    $archivo = get_field('archivos', $object['id']);
+    if($archivo):
+        return $archivo[0];
+    else:
+        return '';
+    endif;
+}
+
+function rest_api_descripcion_cc($object){
+    $archivo = get_field('descripcion', $object['id']);
+    if($archivo):
+        return $archivo;
+    else:
+        return '';
+    endif;
 }
 
 add_action( 'rest_api_init', 'cc_register_rest_fields' );
+
+
+function returnTaxoJSON($id, $taxo){
+    $tags = get_the_terms($id, $taxo);
+    if($tags):
+        return $tags;
+    else:
+        return '';
+    endif;
+}
 
 ?>
