@@ -644,7 +644,7 @@ function rest_api_descripcion_cc($object){
 function rest_api_enlace_cc($object){
     $enlace = get_field('enlace_externo', $object['id']);
     if($enlace):
-        return $enlace;
+        return get_youtube_id($enlace);
     else:
         return '';
     endif;
@@ -660,6 +660,14 @@ function returnTaxoJSON($id, $taxo){
     else:
         return '';
     endif;
+}
+
+function get_youtube_id($url)
+{
+    if (stristr($url,'youtu.be/'))
+        {preg_match('/(https:|http:|)(\/\/www\.|\/\/|)(.*?)\/(.{11})/i', $url, $final_ID); return $final_ID[4]; }
+    else 
+        {@preg_match('/(https:|http:|):(\/\/www\.|\/\/|)(.*?)\/(embed\/|watch.*?v=|)([a-z_A-Z0-9\-]{11})/i', $url, $IDD); return $IDD[5]; }
 }
 
 ?>
