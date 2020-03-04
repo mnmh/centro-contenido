@@ -558,6 +558,15 @@ function cc_register_rest_fields(){
             'schema'          => null,
         )
     );
+
+    register_rest_field( 'post',
+        'enlace',
+        array(
+            'get_callback' => 'rest_api_enlace_cc',
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
 }
 
 function rest_api_titulo_cc($object){
@@ -627,6 +636,15 @@ function rest_api_descripcion_cc($object){
     $archivo = get_field('descripcion', $object['id']);
     if($archivo):
         return $archivo;
+    else:
+        return '';
+    endif;
+}
+
+function rest_api_enlace_cc($object){
+    $enlace = get_field('enlace_externo', $object['id']);
+    if($enlace):
+        return $enlace;
     else:
         return '';
     endif;
