@@ -574,7 +574,7 @@ function cc_register_rest_fields(){
         'get_callback' => 'rest_api_imagendestacada_cc',
         'update_callback' => null,
         'schema'          => null,
-    ))
+    ));
 }
 
 function rest_api_titulo_cc($object){
