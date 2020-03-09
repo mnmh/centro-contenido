@@ -575,6 +575,16 @@ function cc_register_rest_fields(){
         'update_callback' => null,
         'schema'          => null,
     ));
+
+    //CAMPOS proyectos
+
+    register_rest_field('proyecto',
+    'descripcion',
+    array(
+        'get_callback' => 'rest_api_descripcion_proyecto_cc',
+        'update_callback' => null,
+        'schema'          => null,
+    ));
 }
 
 function rest_api_titulo_cc($object){
@@ -662,6 +672,15 @@ function rest_api_imagendestacada_cc($object){
     $imagen = get_field('imagen_destacada', $object['id']);
     if($imagen):
         return $imagen;
+    else:
+        return '';
+    endif;
+}
+
+function rest_api_descripcion_proyecto_cc($object){
+    $descripcion = get_field('descripcion', 'proyecto_' . $object['id']);
+    if($descripcion):
+        return $descripcion;
     else:
         return '';
     endif;
