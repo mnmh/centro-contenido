@@ -4,7 +4,7 @@
 <?php
 	$args = array(
         'numberposts' => -1,
-        'post_status' => 'draft'
+        'post_status' => 'publish'
     );
 
     $preregistro = get_posts( $args );
@@ -15,24 +15,98 @@
 
     foreach ($preregistro as $item):
 
-    	$new_args = array(
-    		'ID' => $item->ID,
-            // 'post_title' => get_field('titulo', $item->ID),
-    		'post_status' => 'publish',
-    		// 'post_date_gmt' => gmdate( 'Y-m-d H:i:s', strtotime('today') )
-    	);
+    	
 
     	// print_r($new_args);
 
-    	// error_log('message');
+		// error_log('message');
 
-    	// wp_update_post($new_args);
+		$titulo = get_field('titulo', $item->ID);
+		
+		if(get_the_title() == '') {
+			$new_args = array(
+				'ID' => $item->ID,
+				'post_title' => $titulo,
+				'post_status' => 'publish',
+				// 'post_date_gmt' => gmdate( 'Y-m-d H:i:s', strtotime('today') )
+			);
+			wp_update_post($new_args);
+		}
+
+		$archivos = get_field('archivos', $item->ID);
+
+		// echo print_r($archivos);
+
+		
+		if($archivos){
+			if(count($archivos) > 1){
+
+				for($i = 0; $i < count($archivos); $i++){
+					$args = array(
+						'post_title' => $titulo
+					);
+					
+					$newId = wp_insert_post($args);
+					// $newId = 1;
+					if($newId > 0){
+						// Actualizar el campo de archivo
+						$field = 'field_5da62ff32695b';
+						$value = array(
+							$archivos[$i]
+						);
+
+						update_field($field, $value, $newId);
+
+						duplicarCampo('tipo_contenido_copy', $newId, $item->ID);
+						duplicarCampo('imagen_destacada', $newId, $item->ID);
+						duplicarCampo('titulo', $newId, $item->ID);
+						duplicarCampo('enlace_externo', $newId, $item->ID);
+						duplicarCampo('fecha', $newId, $item->ID);
+						duplicarCampo('tipo_contenido', $newId, $item->ID);
+						duplicarCampo('clase_contenido', $newId, $item->ID);
+						duplicarCampo('pais', $newId, $item->ID);
+						duplicarCampo('departamento', $newId, $item->ID);
+						duplicarCampo('ciudad', $newId, $item->ID);
+						duplicarCampo('corregimiento', $newId, $item->ID);
+						duplicarCampo('iniciativa', $newId, $item->ID);
+						duplicarCampo('tipo_vic', $newId, $item->ID);
+						duplicarCampo('etiquetas', $newId, $item->ID);
+						duplicarCampo('descripcion', $newId, $item->ID);
+						duplicarCampo('autores', $newId, $item->ID);
+						duplicarCampo('creditos', $newId, $item->ID);
+						duplicarCampo('derechos', $newId, $item->ID);
+						duplicarCampo('observaciones', $newId, $item->ID);
+					}
+					
+				}
+
+				wp_delete_post($item->ID);
+
+				echo 'Se crearon ' . count($archivos) . ' de la entrada ' . $titulo;
+			}
+		}
+		
+
+
 ?>
 
 <div class="elemento">
-	<?php echo get_field('titulo', $item->ID) ?>
+	<!-- <?php echo get_field('titulo', $item->ID) ?> -->
 </div>
 
-<?php endforeach; ?>
+<?php
+
+	endforeach;
+	function duplicarCampo($campo, $newId, $oldId) {
+		$field = acf_get_field( $campo, $oldId );
+		$field_key = $field['key'];
+		$value = get_field($campo, $oldId);
+		if($value){
+			update_field($field_key, $value, $newId);
+		}
+		// echo $field_key;
+	}
+
+?>
 
 <?php get_footer(); ?>
