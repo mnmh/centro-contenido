@@ -23,7 +23,7 @@
 
 		$titulo = get_field('titulo', $item->ID);
 		
-		// if(get_the_title() == '') {
+		if(get_the_title() == '') {
 			$new_args = array(
 				'ID' => $item->ID,
 				'post_title' => $titulo,
@@ -31,7 +31,7 @@
 				// 'post_date_gmt' => gmdate( 'Y-m-d H:i:s', strtotime('today') )
 			);
 			wp_update_post($new_args);
-		// }
+		}
 
 		$archivos = get_field('archivos', $item->ID);
 
