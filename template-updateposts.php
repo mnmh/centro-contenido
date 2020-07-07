@@ -80,7 +80,7 @@
 					
 				}
 
-				wp_delete_post($item->ID);
+				wp_delete_post($item->ID, true);
 
 				echo 'Se crearon ' . count($archivos) . ' de la entrada ' . $titulo;
 			}
