@@ -43,7 +43,8 @@
 
 				for($i = 0; $i < count($archivos); $i++){
 					$args = array(
-						'post_title' => $titulo
+						'post_title' => $titulo,
+						'post_status' => 'publish'
 					);
 					
 					$newId = wp_insert_post($args);
