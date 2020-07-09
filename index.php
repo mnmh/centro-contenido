@@ -140,6 +140,10 @@ foreach($preregistro as $item):
             <?php the_author_meta( 'user_nicename' , $authorID ); ?>
         </div>
 
+        <div class="identificador">
+            <?php echo $postID ?>
+        </div>
+
         <a href="<?php echo get_blogInfo('url') ?>/?page_id=67&single_id=<?php echo $postID?>">
             <i class="fas fa-edit"></i>
         </a>
