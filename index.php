@@ -148,6 +148,16 @@ foreach($preregistro as $item):
             <i class="fas fa-edit"></i>
         </a>
 
+        <?php if($archivos):
+            if($num > 1):
+        ?>
+        <a href="<?php echo get_blogInfo('url') ?>/update?updateid=<?php echo $postID?>">
+            Separar archivos
+        </a>
+        <?php endif;endif; ?>
+
+        
+
         <!-- <a href="">
             <i class="fas fa-trash"></i>
         </a> -->

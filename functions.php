@@ -706,4 +706,10 @@ function get_youtube_id($url)
         {@preg_match('/(https:|http:|):(\/\/www\.|\/\/|)(.*?)\/(embed\/|watch.*?v=|)([a-z_A-Z0-9\-]{11})/i', $url, $IDD); return $IDD[5]; }
 }
 
+function custom_query_cc( $vars ){
+    $vars[] = "updateid";
+    return $vars;
+}
+add_filter( 'query_vars', 'custom_query_cc' );
+
 ?>

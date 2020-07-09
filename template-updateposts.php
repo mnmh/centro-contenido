@@ -2,7 +2,11 @@
 <?php get_header(); ?>
 
 <?php
+$updateid = get_query_var('updateid');
+
+if($updateid):
 	$args = array(
+		'include' => array($updateid)
         'numberposts' => -1,
         'post_status' => 'publish'
     );
@@ -77,8 +81,14 @@
 						duplicarCampo('creditos', $newId, $item->ID);
 						duplicarCampo('derechos', $newId, $item->ID);
 						duplicarCampo('observaciones', $newId, $item->ID);
+						duplicarCampo('denominacion', $newId, $item->ID);
+						duplicarCampo('proyecto', $newId, $item->ID);
+						duplicarCampo('procedencia', $newId, $item->ID);
+						duplicarCampo('avaluo', $newId, $item->ID);
+						duplicarCampo('moneda', $newId, $item->ID);
+						duplicarCampo('licencias_uso', $newId, $item->ID);
+						duplicarCampo('observaciones_registro', $newId, $item->ID);
 					}
-					
 				}
 
 				wp_delete_post($item->ID, true);
@@ -98,15 +108,18 @@
 <?php
 
 	endforeach;
-	function duplicarCampo($campo, $newId, $oldId) {
-		$field = acf_get_field( $campo, $oldId );
-		$field_key = $field['key'];
-		$value = get_field($campo, $oldId);
-		if($value){
-			update_field($field_key, $value, $newId);
-		}
-		// echo $field_key;
+endif;
+
+function duplicarCampo($campo, $newId, $oldId) {
+	$field = acf_get_field( $campo, $oldId );
+	$field_key = $field['key'];
+	$value = get_field($campo, $oldId);
+	if($value){
+		update_field($field_key, $value, $newId);
+		sleep(500);
 	}
+	// echo $field_key;
+}
 
 ?>
 
