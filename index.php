@@ -148,9 +148,9 @@ foreach($preregistro as $item):
             <i class="fas fa-edit"></i>
         </a>
 
-        <a href="">
+        <!-- <a href="">
             <i class="fas fa-trash"></i>
-        </a>
+        </a> -->
     </div>
 
     
