@@ -6,8 +6,8 @@ $updateid = get_query_var('updateid');
 
 if($updateid):
 	$args = array(
-		'include' => array($updateid)
-        'numberposts' => -1,
+		'include' => array($updateid),
+        'numberposts' => 1,
         'post_status' => 'publish'
     );
 
@@ -107,7 +107,7 @@ if($updateid):
 
 <?php
 
-	endforeach;
+endforeach;
 endif;
 
 function duplicarCampo($campo, $newId, $oldId) {
