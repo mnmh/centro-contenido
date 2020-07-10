@@ -116,7 +116,7 @@ function duplicarCampo($campo, $newId, $oldId) {
 	$value = get_field($campo, $oldId);
 	if($value){
 		update_field($field_key, $value, $newId);
-		sleep(500);
+		sleep(1);
 	}
 	// echo $field_key;
 }
