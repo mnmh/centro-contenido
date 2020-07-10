@@ -61,7 +61,8 @@ if($updateid):
 						);
 
 						update_field($field, $value, $newId);
-
+						sleep(1);
+						
 						duplicarCampo('tipo_contenido_copy', $newId, $item->ID);
 						duplicarCampo('imagen_destacada', $newId, $item->ID);
 						duplicarCampo('titulo', $newId, $item->ID);
