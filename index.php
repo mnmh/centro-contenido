@@ -171,7 +171,7 @@ foreach($preregistro as $item):
                     $resp .= $l;
                 endif;
 
-                $resp .= sprintf('%10d', $postID);
+                $resp .= sprintf('%010d', $postID);
 
                 echo $resp;
             ?>
