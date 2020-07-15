@@ -153,16 +153,20 @@ foreach($preregistro as $item):
                 $terms = get_the_terms($postID, 'tipo');
                 $resp = '';
                 if($terms):
-                    $resp .= $terms[0]->name;
+                    // $resp .= $terms[0]->name;
                 endif;
 
                 $terms = get_the_terms($postID, 'tipo-de-contenido');
                 if($terms):
-                    $l = 'A';
+                    $l = '';
                     if($terms[0]->name == 'Gráfica') $l = 'G';
-                    elseif($terms[0]->name == 'Interactivo') $l = 'IN';
-                    elseif($terms[0]->name == 'Audiovisual') $l = 'A';
+                    elseif($terms[0]->name == 'Interactivo') $l = 'N';
+                    elseif($terms[0]->name == 'Audiovisual') $l = 'D';
                     elseif($terms[0]->name == 'Publicación') $l = 'P';
+                    elseif($terms[0]->name == 'Sonoro') $l = 'S';
+                    elseif($terms[0]->name == 'Audio') $l = 'A';
+                    elseif($terms[0]->name == 'Video') $l = 'V';
+                    elseif($terms[0]->name == 'Imagen') $l = 'I';
                     elseif($terms[0]->name == 'Sonoro') $l = 'S';
                     $resp .= $l;
                 endif;
