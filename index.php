@@ -150,7 +150,7 @@ foreach($preregistro as $item):
 
         <a href="#">
             <?php
-                $terms = get_the_terms($postID, 'clase-de-contenido');
+                $terms = get_the_terms($postID, 'tipo');
                 $resp = '';
                 if($terms):
                     $resp .= $terms[0]->name;
@@ -159,7 +159,7 @@ foreach($preregistro as $item):
                 $terms = get_the_terms($postID, 'tipo-de-contenido');
                 if($terms):
                     $l = 'A';
-                    if($terms[0]->name == 'Imagen') $l = 'I';
+                    if($terms[0]->name == 'Gráfica') $l = 'G';
                     elseif($terms[0]->name == 'Interactivo') $l = 'IN';
                     elseif($terms[0]->name == 'Audiovisual') $l = 'A';
                     elseif($terms[0]->name == 'Publicación') $l = 'P';
