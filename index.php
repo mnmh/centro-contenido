@@ -148,6 +148,31 @@ foreach($preregistro as $item):
             <i class="fas fa-edit"></i>
         </a>
 
+        <a href="#">
+            <?php
+                $terms = get_the_terms($postID, 'clase-de-contenido');
+                $resp = '';
+                if($terms):
+                    $resp .= $terms[0]->name;
+                endif;
+
+                $terms = get_the_terms($postID, 'tipo-de-contenido');
+                if($terms):
+                    $l = 'A';
+                    if($terms[0]->name == 'Imagen') $l = 'I';
+                    elseif($terms[0]->name == 'Interactivo') $l = 'IN';
+                    elseif($terms[0]->name == 'Audiovisual') $l = 'A';
+                    elseif($terms[0]->name == 'Publicación') $l = 'P';
+                    elseif($terms[0]->name == 'Sonoro') $l = 'S';
+                    $resp .= $l;
+                endif;
+
+                $resp .= sprintf('%09d', $postID);
+
+                echo $resp;
+            ?>
+        </a>
+
         <?php if($archivos):
             if($num > 1):
         ?>
