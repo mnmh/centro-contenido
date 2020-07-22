@@ -712,4 +712,54 @@ function custom_query_cc( $vars ){
 }
 add_filter( 'query_vars', 'custom_query_cc' );
 
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'cc/v1', '/busqueda', array(
+      'methods' => 'GET',
+      'callback' => 'busqueda_cc',
+    ) );
+  } );
+
+function busqueda_cc( $data ) {
+    $args = array(
+        // 's' => $data->get_param('q'),
+        'posts_per_page' => 20,
+        'tax_query' => array(
+            'taxonomy' => 'tipo-de-contenido',
+            'terms' => array('grafica'),
+            'fíeld' => 'slug',
+            'operator' => 'NOT IN'
+        )
+    );
+
+    if($data->get_param('tipo-de-contenido') != ''){
+        $terms = explode(',',$data->get_param('tipo-de-contenido'));
+
+        $args['tax_query'] = array(
+            'relation' => 'OR',
+            array(
+                'taxonomy' => 'tipo-de-contenido',
+                'terms' => array('grafica'),
+                'fíeld' => 'slug',
+                'operator' => 'NOT IN'
+            ),
+            array(
+                'taxonomy' => 'tipo-de-contenido',
+                'terms' => $terms,
+                'fíeld' => 'term_id'
+            )
+            );
+    }
+
+    if($data->get_param('q') != ''){
+        $args['s'] = $data->get_param('q');
+    }
+
+    $posts = get_posts($args);
+
+    if ( empty( $posts ) ) {
+        return null;
+    }
+    // return $data->get_param('tipo-de-contenido');
+    return $posts;
+}
 ?>
