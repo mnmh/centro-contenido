@@ -8824,7 +8824,12 @@ blockquote em strong {
     margin: 5px;
     border: 1px solid #999;
     padding: 10px;
-    border-radius: 5px; }
+    border-radius: 5px;
+    display: flex; }
+    #listadoElementos .elemento .left {
+      margin-right: 10px; }
+      #listadoElementos .elemento .left img {
+        width: 100px; }
     #listadoElementos .elemento .nombre {
       font-size: 0.75em;
       font-weight: bold;
@@ -8878,15 +8883,3 @@ blockquote em strong {
   font-weight: bold; }
   .acordeon .icon {
     margin-right: 10px; }
-table {
-    text-align: left;
-    font-weight: normal;
-    color: #888;
-}
-
-table th {
-    font-weight: normal;
-    border: 1px solid;
-    font-size: 0.75em;
-    padding: 5px;
-}

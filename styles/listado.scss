@@ -8,6 +8,14 @@
         border: 1px solid #999;
         padding: 10px;
         border-radius: 5px;
+        display: flex;
+
+        .left {
+            margin-right: 10px;
+            img {
+                width: 100px;
+            }
+        }
 
         .nombre {
             font-size: 0.75em;

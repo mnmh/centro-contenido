@@ -84,115 +84,124 @@ foreach($preregistro as $item):
 ?>
 
 <div class="elemento">
-
-    <div class="nombre">
-        <?php echo get_field('titulo', $postID) ?>
+    <div class="left">
+        <?php $terms = get_the_terms($postID, 'tipo-de-contenido'); ?>
+        <?php $archivo = get_field('archivos', $postID); ?>
+        <?php
+            if($terms[0]->name == 'Imagen' && count($archivo)):
+        ?>
+            <img src="<?php echo $archivo[0]['archivo']['sizes']['thumbnail'] ?>" alt="">
+        <?php endif ?>
     </div>
-
-    <?php
-        $archivos = get_field('archivos', $postID);
-        if($archivos):
-            $num = count($archivos);
-        endif;
-    ?>
-
-    <div class="info">
-        <div class="tipo">
-            <?php
-                $terms = get_the_terms($postID, 'tipo-de-contenido');
-                if($terms):
-                foreach($terms as $term){
-                    echo $term->name;
-
-                    $index = array_search($term->name, $listadoTipos);
-                    $tiposCount[$index]+=1;
-                    // if($num > 1)
-                    //     $tiposCount[$index]+=$num - 1;
-                }
-                endif; 
-            ?>
+    <div class="right">
+    
+        <div class="nombre">
+            <?php echo get_field('titulo', $postID) ?>
         </div>
-        <div class="clase">
-            <?php
-                $terms = get_the_terms($postID, 'clase-de-contenido');
-                if($terms):
-                foreach($terms as $term){
-                    echo $term->name;
-                }
-                endif; 
-            ?>
-        </div>
-        <div class="archivos">
+
+        <?php
+            $archivos = get_field('archivos', $postID);
+            if($archivos):
+                $num = count($archivos);
+            endif;
+        ?>
+
+        <div class="info">
+            <div class="tipo">
+                <?php
+                    $terms = get_the_terms($postID, 'tipo-de-contenido');
+                    if($terms):
+                    foreach($terms as $term){
+                        echo $term->name;
+
+                        $index = array_search($term->name, $listadoTipos);
+                        $tiposCount[$index]+=1;
+                        // if($num > 1)
+                        //     $tiposCount[$index]+=$num - 1;
+                    }
+                    endif; 
+                ?>
+            </div>
+            <div class="clase">
+                <?php
+                    $terms = get_the_terms($postID, 'clase-de-contenido');
+                    if($terms):
+                    foreach($terms as $term){
+                        echo $term->name;
+                    }
+                    endif; 
+                ?>
+            </div>
+            <div class="archivos">
+                <?php if($archivos):
+                    if($num > 1):
+                        echo $num . ' archivos';
+                    else:
+                        echo '1 archivo';
+                    endif;
+
+                else:
+                    echo 'no hay archivos';
+
+                endif; ?>
+            </div>
+            
+            <div class="autor">
+                <?php the_author_meta( 'user_nicename' , $authorID ); ?>
+            </div>
+
+            <div class="identificador">
+                <?php echo $postID ?>
+            </div>
+
+            <a href="<?php echo get_blogInfo('url') ?>/?page_id=67&single_id=<?php echo $postID?>">
+                <i class="fas fa-edit"></i>
+            </a>
+
+            <a href="#">
+                <?php
+                    $terms = get_the_terms($postID, 'tipo');
+                    $resp = '';
+                    if($terms):
+                        // $resp .= $terms[0]->name;
+                    endif;
+
+                    $terms = get_the_terms($postID, 'tipo-de-contenido');
+                    if($terms):
+                        $l = '';
+                        if($terms[0]->name == 'Gráfica') $l = 'G';
+                        elseif($terms[0]->name == 'Interactivo') $l = 'N';
+                        elseif($terms[0]->name == 'Audiovisual') $l = 'D';
+                        elseif($terms[0]->name == 'Publicación') $l = 'P';
+                        elseif($terms[0]->name == 'Sonoro') $l = 'S';
+                        elseif($terms[0]->name == 'Audio') $l = 'A';
+                        elseif($terms[0]->name == 'Video') $l = 'V';
+                        elseif($terms[0]->name == 'Imagen') $l = 'I';
+                        elseif($terms[0]->name == 'Sonoro') $l = 'S';
+                        $resp .= $l;
+                    endif;
+
+                    $resp .= sprintf('%09d', $postID);
+
+                    echo $resp;
+                ?>
+            </a>
+
             <?php if($archivos):
                 if($num > 1):
-                    echo $num . ' archivos';
-                else:
-                    echo '1 archivo';
-                endif;
-
-            else:
-                echo 'no hay archivos';
-
-            endif; ?>
-        </div>
-        
-        <div class="autor">
-            <?php the_author_meta( 'user_nicename' , $authorID ); ?>
-        </div>
-
-        <div class="identificador">
-            <?php echo $postID ?>
-        </div>
-
-        <a href="<?php echo get_blogInfo('url') ?>/?page_id=67&single_id=<?php echo $postID?>">
-            <i class="fas fa-edit"></i>
-        </a>
-
-        <a href="#">
-            <?php
-                $terms = get_the_terms($postID, 'tipo');
-                $resp = '';
-                if($terms):
-                    // $resp .= $terms[0]->name;
-                endif;
-
-                $terms = get_the_terms($postID, 'tipo-de-contenido');
-                if($terms):
-                    $l = '';
-                    if($terms[0]->name == 'Gráfica') $l = 'G';
-                    elseif($terms[0]->name == 'Interactivo') $l = 'N';
-                    elseif($terms[0]->name == 'Audiovisual') $l = 'D';
-                    elseif($terms[0]->name == 'Publicación') $l = 'P';
-                    elseif($terms[0]->name == 'Sonoro') $l = 'S';
-                    elseif($terms[0]->name == 'Audio') $l = 'A';
-                    elseif($terms[0]->name == 'Video') $l = 'V';
-                    elseif($terms[0]->name == 'Imagen') $l = 'I';
-                    elseif($terms[0]->name == 'Sonoro') $l = 'S';
-                    $resp .= $l;
-                endif;
-
-                $resp .= sprintf('%09d', $postID);
-
-                echo $resp;
             ?>
-        </a>
+            <a href="<?php echo get_blogInfo('url') ?>/update?updateid=<?php echo $postID?>">
+                Separar archivos
+            </a>
+            <?php endif;endif; ?>
 
-        <?php if($archivos):
-            if($num > 1):
-        ?>
-        <a href="<?php echo get_blogInfo('url') ?>/update?updateid=<?php echo $postID?>">
-            Separar archivos
-        </a>
-        <?php endif;endif; ?>
+            
 
-        
-
-        <!-- <a href="">
-            <i class="fas fa-trash"></i>
-        </a> -->
+            <!-- <a href="">
+                <i class="fas fa-trash"></i>
+            </a> -->
+        </div>
     </div>
-
-    
 </div>
 <?php
 endif;endforeach;
