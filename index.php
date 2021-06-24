@@ -50,7 +50,7 @@ $user_info = get_userdata( $user_id );
 $user_roles = implode(', ', $user_info->roles);
 
 $args = array(
-    'numberposts' => -1,
+    'numberposts' => 10,
     'post_status' => array('draft', 'publish'),
     'author' => $user_id
 );
@@ -86,11 +86,11 @@ foreach($preregistro as $item):
 <div class="elemento">
     <div class="left">
         <?php $terms = get_the_terms($postID, 'tipo-de-contenido'); ?>
-        <?php $archivo = get_field('archivos', $postID); ?>
+        <?php $archivos = get_field('archivos', $postID); ?>
         <?php
-            if($terms[0]->name == 'Imagen' && count($archivo)):
+            if($terms[0]->name == 'Gráfica' && count($archivos)):
         ?>
-            <img src="<?php echo $archivo[0]['archivo']['sizes']['thumbnail'] ?>" alt="">
+            <img src="<?php echo $archivos[0]['archivo']['sizes']['thumbnail'] ?>" alt="">
         <?php endif ?>
     </div>
     <div class="right">
@@ -100,7 +100,7 @@ foreach($preregistro as $item):
         </div>
 
         <?php
-            $archivos = get_field('archivos', $postID);
+           /* $archivos = get_field('archivos', $postID);*/
             if($archivos):
                 $num = count($archivos);
             endif;
@@ -109,7 +109,7 @@ foreach($preregistro as $item):
         <div class="info">
             <div class="tipo">
                 <?php
-                    $terms = get_the_terms($postID, 'tipo-de-contenido');
+                    /*$terms = get_the_terms($postID, 'tipo-de-contenido');*/
                     if($terms):
                     foreach($terms as $term){
                         echo $term->name;

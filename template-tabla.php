@@ -73,6 +73,10 @@ foreach($preregistro as $item):
 						<?php echo $archivos[$i]['archivo']['subtype'] ?>
 					</th>
 					<th>
+                                                http://www.museodememoria.gov.co/centro-de-contenido/?contenido=<?php echo $postID ?>
+                                        </th>
+
+					<th>
 						<?php echo intval($archivos[$i]['archivo']['filesize'])/1000000 ?> Mb.
 					</th>
 				</tr>
